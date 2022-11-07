@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { getGroup } from './services/yasnoApi';
 
 function App() {
+  const [group, setGroup] = useState<number>();
+  useEffect(() => {
+    const getData = async () => {
+      const group = await getGroup({
+        region: 'kiev',
+        street_id: '139', query: '15'
+      });
+      setGroup(group);
+    }
+
+    getData();
+  });
+
   return (
     <div className="App">
       <header className="App-header">
@@ -10,14 +24,9 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+
+          Group: {group}
+
       </header>
     </div>
   );
